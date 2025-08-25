@@ -47,14 +47,30 @@ async function handleShortnerRequest(req,res) {
     }
 }
 async function handleAnalayticsbyId(req,res) {
-    const url = URL.findOne({shortUrl:id});
-    if(!url)
-    {
-        return res.json({error:"Cannot find url"});
+    const id = req.params.id;
+    if(!id) {
+        return res.status(400).json({error:"Please provide an ID"});
     }
-    return res.json({analaytics:`${res.clickHistory}`})
+    try {
+        const url = await URL.findOne({shortUrl: id});
+        if(!url)
+        {
+            return res.status(404).json({error:"URL not found"});
+        }
+        return res.json({
+            shortUrl: url.shortUrl,
+            originalUrl: url.originalUrL,
+            totalClicks: url.clickHistory.length,
+            analytics: url.clickHistory
+        });
+    } catch (error) {
+        console.error('Error getting analytics:', error);
+        return res.status(500).json({error: 'Internal server error'});
+    }
 }
+
 module.exports ={
     handleShortUrl,
-    handleShortnerRequest
+    handleShortnerRequest,
+    handleAnalayticsbyId
 }
