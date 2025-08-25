@@ -1,11 +1,7 @@
 const express = require('express');
 const urlRouter = express.Router();
-const {handleShortUrl, handleShortnerRequest} = require('../controllers/url.js')
-
-// Route to create short URL
+const {handleShortUrl, handleShortnerRequest, handleAnalayticsbyId} = require('../controllers/url.js')
 urlRouter.route('/').post(handleShortUrl);
-
-// Route to redirect when accessing short URL
-urlRouter.route('/:id').get(handleShortnerRequest);
-
+urlRouter.route('.//:id').get(handleShortnerRequest);
+urlRouter.route('/analytics/:id').get(handleAnalayticsbyId);
 module.exports = urlRouter;
