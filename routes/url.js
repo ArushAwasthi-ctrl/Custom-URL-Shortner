@@ -11,4 +11,6 @@ urlRouter.route('/:id').get(handleShortnerRequest);
 // Route to get analytics for a short URL
 urlRouter.route('/analytics/:id').get(handleAnalayticsbyId);
 
+// urlRouter.route('/AllUsers').get(handleAllUrls);
+
 module.exports = urlRouter;

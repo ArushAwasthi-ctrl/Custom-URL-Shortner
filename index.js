@@ -1,10 +1,12 @@
 const express = require("express");
 const { log } = require("node:console");
-const path = require('path');
+const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 const urlRouter = require("./routes/url.js");
+const homePageRoute = require('./routes/homepage.js')
+const URL = require('./models/url-model.js');
 const { dbCall } = require("./db/dbCall.js");
 // connect with data base
 dbCall();
@@ -13,13 +15,12 @@ dbCall();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// using views to perform server side rendering using ejs 
-    app.set("view engine","ejs");
-    app.set("views",path.resolve('./views'));
-    app.use("/homepage",(req,res)=>{
-           res.render('home-page');
-    })
- 
+// using views to perform server side rendering using ejs
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"));
+
+// Homepage route
+app.use('/',homePageRoute);
 
 
 // whenever we request sever with /url route the urlRouter will fire

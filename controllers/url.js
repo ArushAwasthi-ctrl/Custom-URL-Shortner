@@ -68,9 +68,15 @@ async function handleAnalayticsbyId(req,res) {
         return res.status(500).json({error: 'Internal server error'});
     }
 }
-
+// async function handleAllUrls(req,res) {
+//     const urls = await URL.find({});
+//     return res.render(home-page , {
+//         urls:urls
+//     });
+// }
 module.exports ={
     handleShortUrl,
     handleShortnerRequest,
-    handleAnalayticsbyId
+    handleAnalayticsbyId,
+    // handleAllUrls
 }
