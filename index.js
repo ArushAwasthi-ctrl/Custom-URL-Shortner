@@ -19,12 +19,14 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
-// Homepage route
-app.use('/',homePageRoute);
+
 
 
 // whenever we request sever with /url route the urlRouter will fire
 app.use("/url", urlRouter);
+
+// Homepage route
+app.use('/',homePageRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is Listening on Port: ${process.env.PORT}`);

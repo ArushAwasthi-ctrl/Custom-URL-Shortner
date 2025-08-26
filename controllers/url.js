@@ -8,15 +8,28 @@ async function handleShortUrl(req,res){
     }
     try {
         const shortUrl = shortid();
+        
+        // Ensure the URL has a proper protocol
+        let originalUrl = req.body.URL.trim();
+        if (!originalUrl.startsWith('http://') && !originalUrl.startsWith('https://')) {
+            originalUrl = 'http://' + originalUrl;
+        }
+        
         await URL.create({
             shortUrl:shortUrl,
-            originalUrL:req.body.URL,
+            originalUrL:originalUrl,
             clickHistory:[]
+        });
+        // Fetch all URLs to display in the table
+        const urls = await URL.find({});
+        return res.render('home-page', {
+            id: shortUrl,
+            urls: urls
         })
-        return res.json({"Status":"success",
-            id:shortUrl,
-            originalUrl: req.body.URL
-        })
+        // return res.json({"Status":"success",
+        //     id:shortUrl,
+        //     originalUrl: req.body.URL
+        // })
     } catch (error) {
         console.error('Error creating short URL:', error);
         return res.status(500).json({error: 'Internal server error'});

@@ -5,6 +5,7 @@ async function handleHomePage(req, res) {
     const urls = await URL.find({});
     return res.render("home-page", {
       urls: urls,
+      id: null // No ID when just loading the homepage
     });
   } catch (err) {
     console.error(err);

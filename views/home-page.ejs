@@ -8,9 +8,42 @@
 </head>
 
 <body>
-  <h2>Hi All of the urls in data base are</h2>
-    
-       
+  <h2>Hi Welcome to URL Shortner</h2>
+
+  <% if (locals.id) { %>
+  <p style="color: green; font-weight: bold;">URL Generated: http://localhost:3000/url/<%= id %></p>
+  <% } %>
+
+  <form action="/url" method="post">
+    <label for="url-input">Enter your URL:</label><br>
+    <input placeholder="example: https://www.google.com" type="text" name="URL"><br><br>
+    <button type="submit">Generate Short URL</button>
+  </form>
+  <% if (urls && urls.length > 0) { %>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Short Url</th>
+        <th>Original Url</th>
+        <th>Click History</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% urls.forEach((url, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= url.shortUrl %></td>
+          <td><%= url.originalUrL %></td>
+          <td><%= url.clickHistory.length %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>No URLs found.</p>
+<% } %>
+
 </body>
 
 </html>
