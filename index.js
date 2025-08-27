@@ -4,12 +4,17 @@ const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
-const urlRouter = require("./routes/url.js");
-const homePageRoute = require('./routes/homepage.js')
+
+
 const URL = require('./models/url-model.js');
 const { dbCall } = require("./db/dbCall.js");
 // connect with data base
 dbCall();
+
+const urlRoute = require("./routes/url.js");
+const homePageRoute = require('./routes/homepage.js')
+const userRoute = require('./routes/user.js')
+
 
 // middleware to accept form input and JSON
 app.use(express.urlencoded({ extended: false }));
@@ -20,13 +25,15 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 
-
+// User Login Route
+app.use('/user',userRoute);
 
 // whenever we request sever with /url route the urlRouter will fire
-app.use("/url", urlRouter);
+app.use("/url", urlRoute);
 
 // Homepage route
 app.use('/',homePageRoute);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is Listening on Port: ${process.env.PORT}`);

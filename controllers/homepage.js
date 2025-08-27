@@ -12,5 +12,10 @@ async function handleHomePage(req, res) {
     res.status(500).send("Server error");
   }
 }
-
-module.exports = { handleHomePage };
+function handleRenderSignUp(req,res) {
+   return res.render('signup')
+}
+function handleRenderLogin(req,res){
+    return res.render('login');
+}
+module.exports = { handleHomePage,handleRenderSignUp , handleRenderLogin};
